@@ -1,2 +1,12 @@
+#Ignore files that were not saved correctly
 ~
+
+#Ignore files in the private instance directory
 /instance/
+
+#ignore files for the virtual environment
+/app/bin
+/app/include
+/app/lib
+/app/pip-selfcheck.json
+
