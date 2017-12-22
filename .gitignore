@@ -10,3 +10,5 @@
 /app/lib
 /app/pip-selfcheck.json
 
+#Ignore python cache files
+__pycache__/
