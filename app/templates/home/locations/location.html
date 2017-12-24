@@ -1,0 +1,30 @@
+<!-- app/templates/home/locations/location.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_location %}
+        Add Location
+    {% else %}
+        Edit Location
+    {% endif %}
+{% endblock %}
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_location %}
+                <h1>Add Location</h1>
+            {% else %}
+                <h1>Edit Location</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

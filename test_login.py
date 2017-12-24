@@ -9,13 +9,6 @@ from app.models import Department, Employee, Role
 
 from test_base import TestBase
 
-
-#test invalid pages
-#test login invalid user
-#register user
-#test valid user invalid password
-#test valid user and valid password
-
 class MyTest(TestBase):
     def test_01_bad_registrations(self):
         #Test Registering with a bad email

@@ -1,0 +1,64 @@
+<!-- app/templates/home/locations/areas.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Areas in {{ location_name }} {% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Areas in {{ location_name }}</h1>
+        {% if areas %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="55%"> Name </th>
+                  <th width="15%"> List Order </th>
+                  <th width="15%"> Edit </th>
+                  <th width="15%"> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for area in areas %}
+                <tr>
+                  <td> {{ area.area }} </td>
+                 <td>
+                     {{ area.location.location }}  {{ area.list_order }}
+                  </td>
+                  <td>
+                    <a href="{{ url_for('home.edit_area', id=area.id) }}">
+                      <i class="fa fa-pencil"></i> Edit 
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{i{ url_for('home.delete_area', id=area.id) }i}">
+                      <i class="fa fa-trash"></i> Delete 
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align: center">
+        {% else %}
+          <div style="text-align: center">
+            <h3> No areas have been added. </h3>
+            <hr class="intro-divider">
+        {% endif %}
+          <a href="{{ url_for('home.add_area', location_id=location_id) }}" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Area
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

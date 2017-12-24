@@ -64,6 +64,55 @@ class Role(db.Model):
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
 
+class Unit(db.Model):
+    """Create a Unit table"""
+    __tablename__ = 'units'
+    unit = db.Column(db.String(7), primary_key=True)
+    unit_type = db.Column(db.String(1))
+    def __repr__(self):
+        return '<Unit: {}>'.format(self.unit)
 
+class Area(db.Model):
+    """Create an Area table"""
+    __tablename__ = 'areas'
+    id = db.Column(db.Integer, primary_key=True)
+    area = db.Column(db.String(31), unique=True)
+    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
+    listorder = db.Column(db.Integer)
+    def __repr__(self):
+        return '<Area: {}>'.format(self.area)
+
+class Location(UserMixin, db.Model):
+    """Create a Location table"""
+    __tablename__ = 'locations'
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String(31), index=True, unique=True)
+    areas = db.relationship('Area', backref='location', lazy='dynamic')
+    def __repr__(self):
+        return '<Location: {}>'.format(self.location)
+
+class Item(db.Model):
+    """Create an Item table"""
+    __tablename__ = 'items'
+    id = db.Column(db.Integer, primary_key=True)
+    item = db.Column(db.String(63)) 
+    manufacturer = db.Column(db.String(31)) 
+    default_unit = db.Column(db.String(7), db.ForeignKey('units.unit'))
+    #default_size = db.Column(db.Decimal(5,2))
+    default_size = db.Column(db.Integer)
+    print("models.py:Item.default_size is integer but should be decimal(5,2)")
+    qty_needed = db.Column(db.Integer)
+    print("models.py:Item.qty_needed is integer but should be decimal(5,2)")
+    def __repr__(self):
+        return '<Item: {}>'.format(self.item)
+
+class ItemLocation(db.Model):
+    """Create an ItemLocation table"""
+    __tablename__ = 'item_location'
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), primary_key=True)
+    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'), primary_key=True)
+    area_id = db.Column(db.Integer, db.ForeignKey('areas.id'), primary_key=True)
+    def __repr__(self):
+        return '<Item: {}>'.format(self.item_id)+'<Location: {}>'.format(self.location_id)+'<Area: {}>'.format(self.area_id)
 
 
