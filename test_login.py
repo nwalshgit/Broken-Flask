@@ -48,6 +48,18 @@ class MyTest(TestBase):
         assert b'<title>Dashboard' in rv.data, rv.data
         assert b'Hi, testuser!' in rv.data, rv.data
 
+        #Logout when logged in
+        target_url = url_for('auth.logout')
+        redirect_url = url_for('auth.login')
+        response = self.client.get(target_url)
+        
+        #Logout when already logged out
+        target_url = url_for('auth.logout')
+        redirect_url = url_for('auth.login', next=target_url)
+        response = self.client.get(target_url)
+        self.assertEqual(302,response.status_code)
+        self.assertRedirects(response, redirect_url)
+
     def test_02_403_forbidden(self):
         # create route to abort the request with the 403 Error
         @self.app.route('/403')
@@ -56,10 +68,12 @@ class MyTest(TestBase):
         response = self.client.get('/403')
         self.assertEqual(response.status_code, 403)
         self.assertTrue(b"403 Error" in response.data)
+
     def test_03_404_not_found(self):
         response = self.client.get('/nothinghere')
         self.assertEqual(response.status_code, 404)
         self.assertTrue(b"404 Error" in response.data)
+
     def test_04_500_internal_server_error(self):
         # create route to abort the request with the 500 Error
         @self.app.route('/500')

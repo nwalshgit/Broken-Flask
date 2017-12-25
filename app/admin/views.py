@@ -3,10 +3,10 @@
 from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
-from . import admin
-from .forms import DepartmentForm, EmployeeAssignForm, RoleForm
-from .. import db
-from ..models import Department, Employee, Role
+from .. import db                                                #app/__init__.py: db = SQLAlchemy()
+from ..models import Department, Employee, Role                  #app/models.py: Class Department(....)
+from . import admin                                              #app/admin/__init__.py: admin = Blueprint(....)
+from .forms import DepartmentForm, EmployeeAssignForm, RoleForm  #app/admin/forms.py: Class DepartmentForm(....)
 
 def check_admin():
     """Prevent non-admins from accessing the page"""
